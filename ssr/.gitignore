@@ -2,3 +2,7 @@
 
 # misc
 .DS_Store
+
+# bundle
+/dist
+/dist-server
