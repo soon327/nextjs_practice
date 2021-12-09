@@ -10,7 +10,7 @@ function getConfig(isServer) {
       filename: isServer ? '[name].bundle.js' : '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
       // server.js에서 url이 /dist로 시작하는 경우에만 dist폴더의 파일을 서비스하도록 설정했으므로, html-webpack-plugin이 HTML 생성시 HTML 내부 리소스 파일의 경로를 /dist로 설정해준다.
-      publicPath: '/dist',
+      publicPath: '/dist/',
     },
     target: isServer ? 'node' : 'web',
     //// node_modules 폴더 밑에 있는 모듈을 번들파일에서 제외시켜주는 모듈
@@ -47,7 +47,12 @@ function getConfig(isServer) {
         },
       ],
     },
-    plugins: isServer ? [] : [new CleanWebpackPlugin(), new HtmlWebpackPlugin({ template: './template/index.html' })],
+    plugins: isServer
+      ? []
+      : [
+          new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!server.bundle.js'] }),
+          new HtmlWebpackPlugin({ template: './template/index.html' }),
+        ],
     mode: 'production',
   };
 }
