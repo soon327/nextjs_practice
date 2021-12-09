@@ -1,6 +1,7 @@
 import express from 'express';
 import fs from 'fs';
 import path from 'path';
+import * as url from 'url';
 import { renderToString } from 'react-dom/server';
 import React from 'react';
 import App from './App';
@@ -12,8 +13,16 @@ app.use('/dist', express.static('dist'));
 // 브라우저가 자동으로 요청하는 favicon.ico파일을 필터링한다.
 app.get('/favicon.ico', (req, res) => res.sendStatus(204));
 app.get('*', (req, res) => {
-  const renderString = renderToString(<App initialPage="home" />);
-  const result = html.replace('<div id="root"></div>', `<div id="root">${renderString}</div>`);
+  const parsedUrl = url.parse(req.url, true);
+  // substr 메서드로 슬래쉬(/) 제거
+  const page = parsedUrl.pathname ? parsedUrl.pathname.substr(1) : 'home';
+
+  const renderString = renderToString(<App initialPage={page} />);
+  const initialData = { page };
+  const result = html
+    .replace('<div id="root"></div>', `<div id="root">${renderString}</div>`)
+    // __DATA_FROM_SERVER__ 문자열을 초기데이터로 대체한다.
+    .replace('__DATA_FROM_SERVER__', JSON.stringify(initialData));
   res.send(result);
 });
 app.listen(3000);
