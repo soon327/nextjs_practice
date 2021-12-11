@@ -3,9 +3,9 @@ const { CleanWebpackPlugin } = require('clean-webpack-plugin');
 const HtmlWebpackPlugin = require('html-webpack-plugin');
 const nodeExternals = require('webpack-node-externals');
 
-function getConfig(isServer) {
+function getConfig(isServer, name) {
   return {
-    entry: isServer ? { server: './src/server.js' } : { main: './src/index.js' },
+    entry: { [name]: `./src/${name}` },
     output: {
       filename: isServer ? '[name].bundle.js' : '[name].[chunkhash].js',
       path: path.resolve(__dirname, 'dist'),
@@ -50,7 +50,7 @@ function getConfig(isServer) {
     plugins: isServer
       ? []
       : [
-          new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!server.bundle.js'] }),
+          new CleanWebpackPlugin({ cleanOnceBeforeBuildPatterns: ['**/*', '!*.bundle.js'] }),
           new HtmlWebpackPlugin({ template: './template/index.html' }),
         ],
     mode: 'production',
@@ -58,5 +58,5 @@ function getConfig(isServer) {
 }
 
 // 웹팩 설정파일에서 배열을 내보내면 배열의 각 아이템 개수만큼 웹팩이 실행된다.
-// 클라이언트 코드가 먼저 번들리오디고 서버코드가 다음에 번들링된다.
-module.exports = [getConfig(false), getConfig(true)];
+// 클라이언트 코드가 먼저 번들리오디고 서버코드가 다음에 번들링된다. prerender.js 파일이 제일 마지막에 번들링된다.
+module.exports = [getConfig(false, 'index'), getConfig(true, 'server'), getConfig(true, 'prerender')];
