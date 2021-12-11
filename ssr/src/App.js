@@ -9,12 +9,24 @@ const Container = styled.div`
   border: 1px solid blue;
 `;
 
+const fetchUsername = () => {
+  const usernames = ['kwon', 'soon', 'ki'];
+  const result = new Promise((resolve) => {
+    const username = usernames[Math.floor(Math.random() * 3)];
+    setTimeout(() => resolve(username), 100);
+  });
+  console.log('fetched username ', result);
+  return result;
+};
+
 export default function App({ initialPage }) {
   const [page, setPage] = useState(initialPage);
+  const [username, setUsername] = useState(null);
   useEffect(() => {
     window.onpopstate = (event) => {
       setPage(event.state);
     };
+    fetchUsername().then((data) => setUsername(data));
   }, []);
 
   const onChangePage = (e) => {
@@ -33,7 +45,7 @@ export default function App({ initialPage }) {
       <button data-page="about" onClick={onChangePage}>
         About
       </button>
-      <PageComponent />
+      <PageComponent username={username} />
       <img src={Icon} width={300} height={300} />
     </Container>
   );
