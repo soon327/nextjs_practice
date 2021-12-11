@@ -12,8 +12,11 @@ const html = fs.readFileSync(path.resolve(__dirname, '../dist/index.html'), 'utf
 export const prerenderPages = ['home'];
 
 export function renderPage(page) {
+  // 스타일을 추출하는 데 사용될 객체
   const sheet = new ServerStyleSheet();
+  // collectStyles 메서드로 스타일정보를 수집하기위한 코드를 리액트요소에 삽입한다.
   const renderString = renderToString(sheet.collectStyles(<App page={page} />));
+  // getStyleTags 메서드로 스타일정보를 추출한다.
   const styles = sheet.getStyleTags();
   const result = html.replace('<div id="root"></div>', `<div id="root">${renderString}</div>`).replace('__STYLE_FROM_SERVER__', styles);
   return result;
