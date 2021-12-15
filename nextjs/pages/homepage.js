@@ -1,12 +1,13 @@
 // 넥스트는 리액트 모듈을 자동으로 포함시켜준다.
 // import React from 'react';
 import Head from 'next/head';
+import Icon from '../static/icon.png';
 
 export default function Homepage() {
   return (
     <div>
       <p>This is home page</p>
-      <img src="/static/icon.png" />
+      <img src={Icon} width="300" height="300" />
       <Head>
         <title>homepage</title>
       </Head>
