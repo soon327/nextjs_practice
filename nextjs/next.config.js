@@ -18,4 +18,11 @@ module.exports = {
   images: {
     disableStaticImages: true,
   },
+  exportPathMap: function () {
+    return {
+      '/homepage': { page: '/homepage' },
+      '/page2-hello': { page: '/page2', query: { text: 'hello' } },
+      '/page2-world': { page: '/page2', query: { text: 'world' } },
+    };
+  },
 };
