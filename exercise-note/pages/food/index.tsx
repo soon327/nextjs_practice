@@ -31,7 +31,7 @@ export default function Food() {
       </Head>
       <input onChange={(event) => setInput(event.target.value)} placeholder="칼로리 등록" />
       <button onClick={() => setLocal('foodList', input)}>등록</button>
-      <div className="bg-cyan-500 hover:bg-cyan-700 md:bg-green-300 lg:bg-red-400">ddddddd</div>
+      <div className="bg-cyan-500 hover:bg-cyan-700 md:bg-green-300 lg:bg-red-400">으아아아</div>
     </div>
   );
 }
