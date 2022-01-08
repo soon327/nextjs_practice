@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
+import Input from '../../src/components/common/Input';
 
 // https://www.foodsafetykorea.go.kr/api/newDatasetDetail.do
 
@@ -25,13 +26,20 @@ export default function Food() {
   };
 
   return (
-    <div>
+    <div className="flex flex-col items-center border-2 border-red-500 w-4/6 h-5/6 ">
       <Head>
         <title>오늘 먹은 영양분들</title>
       </Head>
-      <input onChange={(event) => setInput(event.target.value)} placeholder="칼로리 등록" />
-      <button onClick={() => setLocal('foodList', input)}>등록</button>
-      <div className="bg-cyan-500 hover:bg-cyan-700 md:bg-green-300 lg:bg-red-400">으아아아</div>
+      <div>
+        <span>먹은음식 영양검색</span>
+        <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
+        <button onClick={() => setLocal('foodList', input)}>검색</button>
+      </div>
+      <div>
+        <span>음식정보 직접등록</span>
+        <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
+        <button onClick={() => setLocal('foodList', input)}>등록</button>
+      </div>
     </div>
   );
 }
