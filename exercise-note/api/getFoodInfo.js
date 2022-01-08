@@ -3,7 +3,7 @@ export default function getFoodInfo(name) {
 
   const res = fetch(URL)
     .then((res) => res.json())
-    .then((data) => console.log('fetchData::', data.I2790));
+    .then((data) => data.I2790);
 
   return res;
 }
