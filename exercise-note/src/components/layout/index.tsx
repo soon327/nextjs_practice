@@ -9,7 +9,7 @@ export default function index({ children }: React.PropsWithChildren<{}>) {
         <title>운동일지</title>
       </Head>
       <Sidebar />
-      <main className="flex-8  w-full h-full">{children}</main>
+      <main className="flex-8  w-full h-full flex justify-center items-center">{children}</main>
     </div>
   );
 }
