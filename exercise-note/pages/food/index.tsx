@@ -1,7 +1,7 @@
 import { useState, useEffect } from 'react';
 import Head from 'next/head';
 import Input from '../../src/components/common/Input';
-
+import SearchModal from '../../src/components/common/modal/searchModal';
 // https://www.foodsafetykorea.go.kr/api/newDatasetDetail.do
 
 export default function Food() {
@@ -26,19 +26,22 @@ export default function Food() {
   };
 
   return (
-    <div className="flex flex-col items-center border-2 border-red-500 w-4/6 h-5/6 ">
-      <Head>
-        <title>오늘 먹은 영양분들</title>
-      </Head>
-      <div>
-        <span>먹은음식 영양검색</span>
-        <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
-        <button onClick={() => setLocal('foodList', input)}>검색</button>
-      </div>
-      <div>
-        <span>음식정보 직접등록</span>
-        <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
-        <button onClick={() => setLocal('foodList', input)}>등록</button>
+    <div className="w-full h-full border-4 border-stone-900">
+      <SearchModal open={false} />
+      <div className="flex flex-col items-center border-2 border-red-500 w-full h-full relative">
+        <Head>
+          <title>오늘 먹은 영양분들</title>
+        </Head>
+        <div>
+          <span>먹은음식 영양검색</span>
+          <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
+          <button onClick={() => setLocal('foodList', input)}>검색</button>
+        </div>
+        <div>
+          <span>음식정보 직접등록</span>
+          <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
+          <button onClick={() => setLocal('foodList', input)}>등록</button>
+        </div>
       </div>
     </div>
   );
