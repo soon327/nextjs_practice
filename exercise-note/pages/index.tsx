@@ -16,7 +16,7 @@ const Home: NextPage = () => {
         <img src="/soon.png" className=" w-8/12" />
         <p>1. 운동 주 3회이상 가기</p>
         <p>2. 계산된 단백질 하루 80g이상 먹기</p>
-        <p>3. 몸무게 63kg 이상 유지하기</p>
+        <p>3. 몸무게 65kg 이상 유지하기</p>
       </main>
     </div>
   );
