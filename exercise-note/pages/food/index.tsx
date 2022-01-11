@@ -1,28 +1,24 @@
-import { useState, useEffect } from 'react';
+import { useState } from 'react';
 import Head from 'next/head';
 import Input from '../../src/components/common/Input';
-import SearchModal from '../../src/components/common/modal/searchModal';
-// https://www.foodsafetykorea.go.kr/api/newDatasetDetail.do
+import SearchModal from '../../src/components/common/modal/SearchModal';
+import getFoodInfo from '../../api/getFoodInfo';
+import { eventTypes } from 'customTypes';
 
+let timerHandle: any;
 export default function Food() {
-  const [input, setInput] = useState('');
+  const [data, setData] = useState([]);
 
-  const setLocal = (name: string, data: any) => {
-    if (name === 'foodList') {
-      const currentData = localStorage.getItem('foodList') ?? '[]';
-      const parsedData = JSON.parse(currentData);
-
-      localStorage.setItem(name, JSON.stringify([...parsedData, data]));
-      console.log(getLocal('foodList'));
-    }
-  };
-
-  const getLocal = (name: string) => {
-    const data = localStorage.getItem(name);
-    if (data) {
-      return JSON.parse(data);
-    }
-    return '데이터가 없습니다.';
+  const searchFood = (event: eventTypes.Input) => {
+    const food = event.target.value;
+    clearTimeout(timerHandle);
+    timerHandle = setTimeout(async () => {
+      const result = await getFoodInfo(food);
+      if (result?.row) {
+        setData(result.row);
+        console.log('dfddfdf');
+      }
+    }, 500);
   };
 
   return (
@@ -34,13 +30,16 @@ export default function Food() {
         </Head>
         <div>
           <span>먹은음식 영양검색</span>
-          <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
-          <button onClick={() => setLocal('foodList', input)}>검색</button>
+          <Input placeholder="뭐먹었어?" handleInput={searchFood} />
+          <button>검색</button>
         </div>
         <div>
           <span>음식정보 직접등록</span>
-          <Input placeholder="뭐먹었어?" handleInput={(event) => setInput(event.target.value)} />
-          <button onClick={() => setLocal('foodList', input)}>등록</button>
+        </div>
+        <div>
+          {data.map((v: { DESC_KOR: string }, index) => (
+            <li key={index}>{v.DESC_KOR}</li>
+          ))}
         </div>
       </div>
     </div>
