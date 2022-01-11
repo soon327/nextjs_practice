@@ -1,8 +1,6 @@
 import type { NextPage } from 'next';
 import Head from 'next/head';
-import getFoodInfo from '../api/getFoodInfo';
 const Home: NextPage = () => {
-  getFoodInfo('설렁탕');
   return (
     <div className="h-full flex flex-col items-center justify-center w-full ">
       <Head>
