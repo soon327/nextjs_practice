@@ -1,4 +1,4 @@
-import { FOOD_SEARCH, FOOD_SEARCH_FAIL, FOOD_SEARCH_SUCCESS } from './';
+import { FOOD_SEARCH, FOOD_SEARCH_FAIL, FOOD_SEARCH_SUCCESS } from './actionType';
 
 export const search = (payload: any) => {
   return {
