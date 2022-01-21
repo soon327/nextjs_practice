@@ -1,24 +1,32 @@
 import { Action } from 'redux';
+import Food from '../../pages/food';
 import { FOOD_SEARCH_FAIL, FOOD_SEARCH_SUCCESS, FOOD_SEARCH } from '../actions/actionType';
 import { search, searchFail, searchSuccess } from '../actions/food';
 
-const initialState = {
+export interface FoodState {
+  data: any[];
+  foodName: string;
+  error: string;
+}
+const initialState: FoodState = {
   data: [],
-  payload: {},
+  foodName: '',
   error: '',
 };
 
-type SearchAction = ReturnType<typeof search> | ReturnType<typeof searchSuccess> | ReturnType<typeof searchFail>;
+export type SearchAction = ReturnType<typeof search> | ReturnType<typeof searchSuccess> | ReturnType<typeof searchFail>;
 
-export default (state = initialState, action: SearchAction) => {
+const food = (state = initialState, action: SearchAction) => {
   switch (action.type) {
     case FOOD_SEARCH:
-      return { ...state, payload: action.payload };
+      return { ...state, foodName: action.payload.foodName };
     case FOOD_SEARCH_SUCCESS:
-      return { ...state, data: action.data };
+      return { ...state, data: action.payload.data };
     case FOOD_SEARCH_FAIL:
-      return { ...state, error: action.error };
+      return { ...state, error: action.payload.error };
     default:
       return state;
   }
 };
+
+export default food;
