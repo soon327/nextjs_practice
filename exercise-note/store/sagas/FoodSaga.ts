@@ -1,10 +1,9 @@
-import { call, put, takeEvery, select } from 'redux-saga/effects';
+import { call, put, takeEvery } from 'redux-saga/effects';
 import { FOOD_SEARCH } from '../actions/actionType';
 import * as actions from '../actions/food';
-import axios from 'axios';
-import { SearchAction } from '../reducers/food';
 import { search } from '../actions/food';
 import getFoodInfo from '../../api/getFoodInfo';
+import { searchSuccess } from '../actions/food';
 
 /*
 redux-saga/effects
@@ -22,9 +21,9 @@ takeEvery: action을 모니터링하는 함수 디스패치되는 해당액션 �
 function* fetchSearchFoodSaga(action: ReturnType<typeof search>) {
   try {
     const result: any[] = yield call(getFoodInfo, action.payload.foodName);
-    console.log('result:', result);
+    yield put(searchSuccess(result));
   } catch (error) {
-    console.log('ererer');
+    yield put(actions.searchFail(error));
   }
 }
 
