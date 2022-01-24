@@ -3,7 +3,7 @@ import axios from 'axios';
 export default function getFoodInfo(name: string) {
   const result = axios.get(`/api/${name}`).then((res) => {
     try {
-      return res.data.I2790;
+      return res.data.I2790.row;
     } catch (err) {
       console.log('getFoodInfo error');
     }
