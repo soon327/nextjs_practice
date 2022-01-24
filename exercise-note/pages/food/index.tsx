@@ -4,20 +4,19 @@ import Input from '../../src/components/common/Input';
 import SearchModal from '../../src/components/common/modal/SearchModal';
 import getFoodInfo from '../../api/getFoodInfo';
 import { eventTypes } from 'customTypes';
+import { useDispatch, useSelector } from 'react-redux';
+import { search } from '../../store/actions/food';
 
 let timerHandle: any;
 export default function Food() {
+  const dispatch = useDispatch();
   const [data, setData] = useState([]);
 
   const searchFood = (event: eventTypes.Input) => {
     const food = event.target.value;
     clearTimeout(timerHandle);
     timerHandle = setTimeout(async () => {
-      const result = await getFoodInfo(food);
-      if (result?.row) {
-        setData(result.row);
-        console.log('dfddfdf');
-      }
+      dispatch(search(food));
     }, 500);
   };
 
